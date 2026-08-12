@@ -1,0 +1,49 @@
+{% assign matched_lookbook_handles = "" %}
+{% assign lookbook_count = 0 %}
+
+{%- for lookbook in shop.metaobjects.lookbook.values -%}
+  {%- assign has_product = false -%}
+  
+  {%- for lb_product in lookbook.products.value -%}
+    {%- if lb_product.handle == product.handle -%}
+      {%- assign has_product = true -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- if has_product and lookbook_count < 2 -%}
+    {%- assign matched_lookbook_handles = matched_lookbook_handles | append: lookbook.system.handle | append: ',' -%}
+    {%- assign lookbook_count = lookbook_count | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if lookbook_count > 0 -%}
+    <div class="react-lookbook-mount" 
+        data-lookbook-handles="{{ matched_lookbook_handles }}"
+        data-country="{{ localization.country.iso_code }}">
+    </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Lookbook (Product Page)",
+  "templates": ["product"],
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Lookbooks are rendered automatically based on product inclusion (Max 2)."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lookbook (Product Page)"
+    }
+  ]
+}
+{% endschema %}

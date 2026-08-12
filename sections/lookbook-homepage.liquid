@@ -1,0 +1,28 @@
+<div class="react-lookbook-mount" data-lookbook-handles="{{ section.settings.lookbook.system.handle }} data-country="{{ localization.country.iso_code }}">
+  <!-- React will mount here -->
+</div>
+
+{% schema %}
+{
+  "name": "Lookbook (Homepage)",
+  "settings": [
+    {
+      "type": "metaobject",
+      "id": "lookbook",
+      "label": "Select Lookbook",
+      "metaobject_type": "lookbook"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lookbook (Homepage)"
+    }
+  ]
+}
+{% endschema %}
