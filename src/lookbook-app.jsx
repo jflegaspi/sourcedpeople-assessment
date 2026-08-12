@@ -149,13 +149,32 @@ const LookbookApp = ({ handles, country }) => {
   );
 };
 
-// Mount app and pass both handles and country data attributes
-document.querySelectorAll('.react-lookbook-mount').forEach(mountNode => {
-  const handles = mountNode.dataset.lookbookHandles;
-  const country = mountNode.dataset.country || 'US'; // Fallback if liquid fails
-  
-  if (handles) {
-    const root = createRoot(mountNode);
-    root.render(<LookbookApp handles={handles} country={country} />);
-  }
-});
+// ADDED: This will tell us if the file is successfully loaded by Shopify
+console.log("React Lookbook file successfully loaded!");
+
+const mountLookbooks = () => {
+  document.querySelectorAll('.react-lookbook-mount').forEach(mountNode => {
+    // Prevent mounting twice on the same element
+    if (mountNode.dataset.mounted) return;
+    
+    const handles = mountNode.dataset.lookbookHandles;
+    const country = mountNode.dataset.country || 'US'; 
+    
+    if (handles) {
+      console.log(`Found lookbook mount point! Handles: ${handles}`);
+      const root = createRoot(mountNode);
+      root.render(<LookbookApp handles={handles} country={country} />);
+      mountNode.dataset.mounted = "true";
+    }
+  });
+};
+
+// Wait for the HTML to finish loading before trying to find the <div>
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', mountLookbooks);
+} else {
+  mountLookbooks();
+}
+
+// Important: This allows the lookbook to show up instantly inside the Shopify Theme Customizer when you add the section!
+document.addEventListener('shopify:section:load', mountLookbooks);
