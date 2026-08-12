@@ -54,7 +54,13 @@ const fetchSingleLookbook = async (handle, countryCode) => {
       }),
     });
 
-    const { data } = await response.json();
+    // ADDED: Destructure errors here to see if GraphQL is rejecting the query
+    const { data, errors } = await response.json();
+    
+    if (errors) {
+       console.error("GRAPHQL ERRORS:", errors); 
+    }
+
     return data?.metaobject;
   } catch (error) {
     console.error(`Failed to fetch lookbook: ${handle}`, error);
@@ -77,9 +83,14 @@ const LookbookApp = ({ handles, country }) => {
     // Pass both the handle and the active country to the fetcher
     Promise.all(handleArray.map(h => fetchSingleLookbook(h, country)))
       .then(results => {
+        
+        // ADDED: This will print the raw data to your browser console
+        console.log("RAW RESULTS FROM SHOPIFY:", results); 
+        
         setLookbooks(results.filter(Boolean));
         setLoading(false);
       });
+      
   }, [handles, country]);
 
   if (loading) return <div>Loading...</div>;
