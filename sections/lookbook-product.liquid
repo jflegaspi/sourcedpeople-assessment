@@ -1,21 +1,37 @@
 {% assign matched_lookbook_handles = "" %}
 {% assign lookbook_count = 0 %}
 
-{%- for lookbook in shop.metaobjects.lookbook.values -%}
-  {%- assign has_product = false -%}
-  
-  {%- for lb_product in lookbook.products.value -%}
-    {%- if lb_product.handle == product.handle -%}
-      {%- assign has_product = true -%}
-      {%- break -%}
+<!-- DEBUGGING BOX: REMOVE THIS ONCE WE FIX THE ISSUE -->
+<div style="background: #ffebee; border: 2px solid red; padding: 20px; margin: 20px 0; color: black;">
+  <h3 style="margin-top:0;">Lookbook Debugger</h3>
+  <p><strong>Viewing Product:</strong> {{ product.handle | default: "NO PRODUCT FOUND" }}</p>
+  <hr>
+
+  {%- for lookbook in shop.metaobjects.lookbook.values -%}
+    {%- assign has_product = false -%}
+    <p><strong>Checking Lookbook:</strong> {{ lookbook.system.handle }}</p>
+    <ul>
+      {%- for lb_product in lookbook.products.value -%}
+        <li>Contains: {{ lb_product.handle }} 
+          {% if lb_product.handle == product.handle %} <strong style="color:green;">(MATCH!)</strong> {% endif %}
+        </li>
+        
+        {%- if lb_product.handle == product.handle -%}
+          {%- assign has_product = true -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+
+    {%- if has_product and lookbook_count < 2 -%}
+      {%- assign matched_lookbook_handles = matched_lookbook_handles | append: lookbook.system.handle | append: ',' -%}
+      {%- assign lookbook_count = lookbook_count | plus: 1 -%}
     {%- endif -%}
   {%- endfor -%}
-
-  {%- if has_product and lookbook_count < 2 -%}
-    {%- assign matched_lookbook_handles = matched_lookbook_handles | append: lookbook.system.handle | append: ',' -%}
-    {%- assign lookbook_count = lookbook_count | plus: 1 -%}
-  {%- endif -%}
-{%- endfor -%}
+  
+  <hr>
+  <p><strong>Final Matched Handles:</strong> {{ matched_lookbook_handles | default: "None" }}</p>
+</div>
+<!-- END DEBUGGING BOX -->
 
 {%- if lookbook_count > 0 -%}
     <div class="react-lookbook-mount" 
@@ -34,10 +50,6 @@
       "id": "bg_color",
       "label": "Background Color",
       "default": "#ffffff"
-    },
-    {
-      "type": "header",
-      "content": "Lookbooks are rendered automatically based on product inclusion (Max 2)."
     }
   ],
   "presets": [
