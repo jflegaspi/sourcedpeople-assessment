@@ -1,55 +1,50 @@
-{% assign matched_lookbook_handles = "" %}
-{% assign lookbook_count = 0 %}
-
-<!-- DEBUGGING BOX: REMOVE THIS ONCE WE FIX THE ISSUE -->
-<div style="background: #ffebee; border: 2px solid red; padding: 20px; margin: 20px 0; color: black;">
-  <h3 style="margin-top:0;">Lookbook Debugger</h3>
-  <p><strong>Viewing Product:</strong> {{ product.handle | default: "NO PRODUCT FOUND" }}</p>
-  <hr>
+{%- if product -%}
+  {% assign matched_lookbook_handles = "" %}
+  {% assign lookbook_count = 0 %}
 
   {%- for lookbook in shop.metaobjects.lookbook.values -%}
     {%- assign has_product = false -%}
-    <p><strong>Checking Lookbook:</strong> {{ lookbook.system.handle }}</p>
-    <ul>
-      {%- for lb_product in lookbook.products.value -%}
-        <li>Contains: {{ lb_product.handle }} 
-          {% if lb_product.handle == product.handle %} <strong style="color:green;">(MATCH!)</strong> {% endif %}
-        </li>
-        
-        {%- if lb_product.handle == product.handle -%}
-          {%- assign has_product = true -%}
-        {%- endif -%}
-      {%- endfor -%}
-    </ul>
+    
+    {%- for lb_product in lookbook.products.value -%}
+      {%- if lb_product.handle == product.handle -%}
+        {%- assign has_product = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
 
     {%- if has_product and lookbook_count < 2 -%}
       {%- assign matched_lookbook_handles = matched_lookbook_handles | append: lookbook.system.handle | append: ',' -%}
       {%- assign lookbook_count = lookbook_count | plus: 1 -%}
     {%- endif -%}
   {%- endfor -%}
-  
-  <hr>
-  <p><strong>Final Matched Handles:</strong> {{ matched_lookbook_handles | default: "None" }}</p>
-</div>
-<!-- END DEBUGGING BOX -->
 
-{%- if lookbook_count > 0 -%}
-    <div class="react-lookbook-mount" 
-        data-lookbook-handles="{{ matched_lookbook_handles }}"
-        data-country="{{ localization.country.iso_code }}">
-    </div>
+  {%- if lookbook_count > 0 -%}
+      <div class="react-lookbook-mount" 
+          data-lookbook-handles="{{ matched_lookbook_handles | remove_last: ',' }}"
+          data-country="{{ localization.country.iso_code }}">
+      </div>
+  {%- elsif request.design_mode -%}
+      <!-- This placeholder ONLY shows in the Shopify Admin, never on the live site -->
+      <div style="padding: 40px 20px; text-align: center; border: 2px dashed #ccc; background: #f9f9f9; margin: 20px 0;">
+         <p style="margin: 0; font-weight: bold;">Lookbook (Product Page) Section</p>
+         <p style="margin: 5px 0 0 0; color: #666;">This section is working, but is currently hidden because the product you are previewing is not assigned to any lookbooks.</p>
+      </div>
+  {%- endif -%}
 {%- endif -%}
 
 {% schema %}
 {
   "name": "Lookbook (Product Page)",
-  "templates": ["product"],
   "settings": [
     {
       "type": "color",
       "id": "bg_color",
       "label": "Background Color",
       "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Lookbooks are rendered automatically based on product inclusion (Max 2)."
     }
   ],
   "presets": [
