@@ -21,13 +21,16 @@
   {%- if lookbook_count > 0 -%}
       <div class="react-lookbook-mount" 
           data-lookbook-handles="{{ matched_lookbook_handles | remove_last: ',' }}"
-          data-country="{{ localization.country.iso_code }}">
+          data-country="{{ localization.country.iso_code }}"
+          data-columns="{{ section.settings.columns | default: 3 }}"
+          data-title-size="{{ section.settings.title_size | default: '2.0' }}"
+          data-show-description="{{ section.settings.show_description }}"
+          data-description-size="{{ section.settings.description_size | default: '1.0' }}">
       </div>
   {%- elsif request.design_mode -%}
-      <!-- This placeholder ONLY shows in the Shopify Admin, never on the live site -->
       <div style="padding: 40px 20px; text-align: center; border: 2px dashed #ccc; background: #f9f9f9; margin: 20px 0;">
          <p style="margin: 0; font-weight: bold;">Lookbook (Product Page) Section</p>
-         <p style="margin: 5px 0 0 0; color: #666;">This section is working, but is currently hidden because the product you are previewing is not assigned to any lookbooks.</p>
+         <p style="margin: 5px 0 0 0; color: #666;">Hidden because the current product is not assigned to any lookbooks.</p>
       </div>
   {%- endif -%}
 {%- endif -%}
@@ -37,18 +40,45 @@
   "name": "Lookbook (Product Page)",
   "settings": [
     {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Background Color",
-      "default": "#ffffff"
+      "type": "header",
+      "content": "Grid & Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Products per row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
     },
     {
       "type": "header",
-      "content": "Dynamic Lookbooks"
+      "content": "Typography Settings"
     },
     {
-      "type": "paragraph",
-      "content": "Rendered automatically based on product inclusion (Max 2)."
+      "type": "range",
+      "id": "title_size",
+      "label": "Header Title Size (rem)",
+      "min": 1.2,
+      "max": 3.0,
+      "step": 0.2,
+      "default": 2.0
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show description",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description Font Size (rem)",
+      "min": 0.8,
+      "max": 1.5,
+      "step": 0.1,
+      "default": 1.0
     }
   ],
   "presets": [

@@ -1,4 +1,10 @@
-<div class="react-lookbook-mount" data-lookbook-handles="{{ section.settings.lookbook.system.handle }}" data-country="{{ localization.country.iso_code }}">
+<div class="react-lookbook-mount" 
+     data-lookbook-handles="{{ section.settings.lookbook.system.handle }}"
+     data-country="{{ localization.country.iso_code }}"
+     data-columns="{{ section.settings.columns | default: 3 }}"
+     data-title-size="{{ section.settings.title_size | default: '2.0' }}"
+     data-show-description="{{ section.settings.show_description }}"
+     data-description-size="{{ section.settings.description_size | default: '1.0' }}">
   <!-- React will mount here -->
 </div>
 
@@ -13,10 +19,45 @@
       "metaobject_type": "lookbook"
     },
     {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Background Color",
-      "default": "#ffffff"
+      "type": "header",
+      "content": "Grid & Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Products per row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Typography Settings"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Header Title Size (rem)",
+      "min": 1.2,
+      "max": 3.0,
+      "step": 0.2,
+      "default": 2.0
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show description",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description Font Size (rem)",
+      "min": 0.8,
+      "max": 1.5,
+      "step": 0.1,
+      "default": 1.0
     }
   ],
   "presets": [
