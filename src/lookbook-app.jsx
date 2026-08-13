@@ -117,7 +117,7 @@ const LookbookApp = ({ handles, country, columns, titleSize, showDescription, de
               return (
                 <a key={product.id} href={`/products/${product.handle}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                   {product.featuredImage && (
-                    <img src={product.featuredImage.url} alt={product.title} style={{ width: '100%', borderRadius: '4px' }} />
+                    <img src={product.featuredImage.url} alt={product.title} style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', borderRadius: '4px' }} />
                   )}
                   
                   <h3 style={{ fontSize: '1.1rem', margin: '10px 0 5px 0' }}>
