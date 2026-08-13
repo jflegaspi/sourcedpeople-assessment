@@ -20,7 +20,7 @@
 
   {%- if lookbook_count > 0 -%}
       <div class="react-lookbook-mount" 
-          style="margin-top: {{ section.settings.margin_top }}px; margin-bottom: {{ section.settings.margin_bottom }}px;"
+          style="margin-top: {{ section.settings.margin_top }}px; margin-bottom: {{ section.settings.margin_bottom }}px; padding-left: {{ section.settings.padding_left }}px; padding-right: {{ section.settings.padding_right }}px;"
           data-lookbook-handles="{{ matched_lookbook_handles | remove_last: ',' }}"
           data-country="{{ localization.country.iso_code }}"
           data-columns="{{ section.settings.columns | default: 3 }}"
@@ -29,7 +29,7 @@
           data-description-size="{{ section.settings.description_size | default: '1.0' }}">
       </div>
   {%- elsif request.design_mode -%}
-      <div style="padding: 40px 20px; text-align: center; border: 2px dashed #ccc; background: #f9f9f9; margin-top: {{ section.settings.margin_top }}px; margin-bottom: {{ section.settings.margin_bottom }}px;">
+      <div style="padding: 40px 20px; text-align: center; border: 2px dashed #ccc; background: #f9f9f9; margin-top: {{ section.settings.margin_top }}px; margin-bottom: {{ section.settings.margin_bottom }}px; padding-left: {{ section.settings.padding_left }}px; padding-right: {{ section.settings.padding_right }}px;">
          <p style="margin: 0; font-weight: bold;">Lookbook (Product Page) Section</p>
          <p style="margin: 5px 0 0 0; color: #666;">Hidden because the current product is not assigned to any lookbooks.</p>
       </div>
@@ -104,6 +104,26 @@
       "unit": "px",
       "label": "Bottom margin",
       "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Left padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Right padding",
+      "default": 20
     }
   ],
   "presets": [

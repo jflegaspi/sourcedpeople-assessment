@@ -1,5 +1,5 @@
 <div class="react-lookbook-mount" 
-     style="margin-top: {{ section.settings.margin_top }}px; margin-bottom: {{ section.settings.margin_bottom }}px;"
+     style="margin-top: {{ section.settings.margin_top }}px; margin-bottom: {{ section.settings.margin_bottom }}px; padding-left: {{ section.settings.padding_left }}px; padding-right: {{ section.settings.padding_right }}px;"
      data-lookbook-handles="{{ section.settings.lookbook.system.handle }}"
      data-country="{{ localization.country.iso_code }}"
      data-columns="{{ section.settings.columns | default: 3 }}"
@@ -83,6 +83,26 @@
       "unit": "px",
       "label": "Bottom margin",
       "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Left padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Right padding",
+      "default": 20
     }
   ],
   "presets": [
