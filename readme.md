@@ -1,4 +1,4 @@
-Shopify React Lookbook
+# Shopify React Lookbook
 
 This feature allows merchants to easily group products into shoppable galleries.
 
@@ -12,7 +12,7 @@ Theme Customizer Friendly: Merchants have full control over the layout. They can
 
 Compare-At Pricing: Built-in logic to handle sales. If a product is discounted, it automatically displays the original price with a strikethrough.
 
-🛠️ The Tech Stack
+# The Tech Stack
 Frontend: React.js (compiled via Vite)
 
 Backend / Data: Shopify Metaobjects
@@ -21,7 +21,7 @@ Data Fetching: Shopify Storefront API (GraphQL)
 
 Theme Integration: Shopify Liquid
 
-Setup & Installation (For Developers)
+# Setup & Installation (For Developers)
 
 1. Shopify Admin Setup
 Before the code can work, you need to set up the data structure in Shopify:
@@ -62,7 +62,7 @@ HTML
 <script src="{{ 'react-lookbook.js' | asset_url }}" defer="defer"></script>
 (Note: Never push your node_modules folder to your Git repository!)
 
-How to Use It (For Merchants)
+# How to Use It (For Merchants)
 
 To create a new lookbook:
 
