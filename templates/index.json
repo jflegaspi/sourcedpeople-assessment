@@ -289,7 +289,10 @@
       "name": "Lookbook (Homepage)",
       "settings": {
         "lookbook": "sample-lookbook",
-        "bg_color": "#ffffff"
+        "columns": 4,
+        "title_size": 2,
+        "show_description": true,
+        "description_size": 1
       }
     }
   },
